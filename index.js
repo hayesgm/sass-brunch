@@ -52,7 +52,7 @@ function SassCompiler(cfg) {
 SassCompiler.prototype.brunchPlugin = true;
 SassCompiler.prototype.type = 'stylesheet';
 SassCompiler.prototype.extension = 'scss';
-SassCompiler.prototype.pattern = /\.scss$/;
+SassCompiler.prototype.pattern = /\.s[ac]ss$/;
 SassCompiler.prototype._bin = isWindows ? 'sass.bat' : 'sass';
 SassCompiler.prototype._compass_bin = isWindows ? 'compass.bat' : 'compass';
 
@@ -96,7 +96,8 @@ SassCompiler.prototype._nativeCompile = function(source, callback) {
       data: source.data,
       includePaths: this._getIncludePaths(source.path),
       outputStyle: (this.optimize ? "nested" : 'compressed'),
-      sourceComments: !this.optimize
+      sourceComments: !this.optimize,
+      indentedSyntax: sassRe.test(source.path)
     },
     function(error, result) {
       if (error) {

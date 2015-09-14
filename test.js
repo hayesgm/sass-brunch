@@ -39,6 +39,17 @@ describe('sass-brunch plugin', function() {
     });
   });
 
+  it('should compile and produce valid result for sass', function(done) {
+    var content = '$a: 5px\n.test\n  border-radius: $a';
+    var expected = '.test {\n  border-radius: 5px; }\n';
+
+    plugin.compile(content, 'file.sass', function(error, data) {
+      expect(error).not.to.be.ok;
+      expect(data).to.equal(expected);
+      done();
+    });
+  });
+
   it('should output valid deps', function(done) {
     var content = "\
     @import \'valid1\';\n\
